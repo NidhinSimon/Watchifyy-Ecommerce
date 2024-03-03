@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>ORDERS</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.png" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/cartstyle/vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/cartstyle/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/cartstyle/fonts/iconic/css/material-design-iconic-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/cartstyle/fonts/linearicons-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/cartstyle/vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/cartstyle/vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/cartstyle/vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/cartstyle/vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/cartstyle/vendor/perfect-scrollbar/perfect-scrollbar.css">
+
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/cartstyle/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/cartstyle/css/main.css">
+	<!--===============================================================================================-->
+
+<!-- Add the necessary CSS link for DataTables -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+
+<!-- Add the necessary JavaScript CDN links for DataTables -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/fav.png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="../assets/vendor/css/core.css">
+  <link rel="stylesheet" href="../assets/vendor/css/theme-default.css">
+  <link rel="stylesheet" href="../assets/css/demo.css">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="/main/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="/main/img/favicon.png">
+  <title>
+    Material Dashboard 2 by Creative Tim
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+  <link href="/main/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="/main/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <!-- CSS Files -->
+  <link id="pagestyle" href="/main/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  <!-- Custom CSS -->
+ 
+
+
+
+
+</head>
+<%- include('../layouts/adminmenu') %>
+ 
+  <div class="card">
+    <div class="card-header">Orders</div>
+    <div class="card-body" style="margin-left: 274px;">
+      <div class="table-responsive table-responsive-sm">
+        <table id="orderTable" class="table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>Payment Method</th>
+              <th>Status</th>
+              <th>Order Price</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% order.forEach(function(order) { %>
+            <tr>
+              <td><%= order.orderId %></td>
+              <td><%= order.date.toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'}) %> <%= order.date.toLocaleTimeString('en-US', {hour: 'numeric', minute:'numeric'}) %></td>
+              <td>
+                <span class="text-warning"><%= order.payment_method %></span>
+              </td>
+              <td>
+                <select onchange="changestatus(event, '<%= order._id %>')">
+                  <option value="Placed" <%= order.status === 'Placed' ? 'selected' : '' %>>Placed</option>
+                  <option value="Shipping" <%= order.status === 'Shipping' ? 'selected' : '' %>>Shipping</option>
+                  <option value="Delivered" <%= order.status === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+                  <option value="Cancelled" <%= order.status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+                </select>
+              </td>
+              <td><%= order.total ? order.total : order.subtotal %></td>
+              <td><%= order.addressId %></td>
+              <td>
+                <a href="/view-product?id=<%= order._id %>" class="btn btn-sm btn-success">View</a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+    <script>
+      function changestatus(event, orderId) {
+        var status = event.target.value;
+        var url = `/orders/${orderId}/status/${status}`;
+        fetch(url, {
+          method: 'PUT',
+        }).then(function(response) {
+          if (response.ok) {
+            alert('Status changed successfully');
+          } else {
+            alert('Something went wrong');
+          }
+        });
+      }
+    </script>
+  </body>
+  <!-- Core JS -->
+
+  <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css">
+
+  <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/sp-2.1.2/datatables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+  // Initialize DataTables
+  $('#orderTable').DataTable();
+});
+
+  </script>
+  <!-- <script>
+    $(document).ready( function () {
+      $('#myTable').DataTable();
+    } );
+    </script> -->
+
+<script>
+  function changestatus(event, id) {
+      fetch('/updateStatus', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ statusvalue: event.target.value, id: id })
+      })
+          .then(function (response) {
+              if (response.ok) {
+                  console.log('Status updated successfully');
+              } else {
+                  console.error('Failed to update status');
+              }
+          })
+          .catch(function (error) {
+              console.error('Error:', error);
+          });
+  }
+
+</script>
+
+
+
+  <!-- Custom JS -->
+  <script>
+    $(document).ready(function () {
+      $('#myTable').DataTable({
+        lengthChange: false, // Disable page size change
+        searching: false, // Disable search bar
+        ordering: true, // Enable column ordering
+        info: false, // Disable table information
+        responsive: true, // Enable responsive design
+        language: {
+          paginate: {
+            previous: '<i class="bx bx-chevron-left"></i>',
+            next: '<i class="bx bx-chevron-right"></i>'
+          }
+        }
+      });
+    });
+  </script>
+
+
+<script src="/main/js/core/popper.min.js"></script>
+<script src="/main/js/core/bootstrap.min.js"></script>
+<script src="/main/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="/main/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="/main/js/plugins/chartjs.min.js"></script>
+
+<script>
+  var win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+      damping: '0.5'
+    }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  }
+</script>
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="/main/js/material-dashboard.min.js?v=3.0.0"></script>
+</body>
+
+</html>  <script src="/main/js/core/popper.min.js"></script>
+<script src="/main/js/core/bootstrap.min.js"></script>
+<script src="/main/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="/main/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="/main/js/plugins/chartjs.min.js"></script>
+
+<script>
+var win = navigator.platform.indexOf('Win') > -1;
+if (win && document.querySelector('#sidenav-scrollbar')) {
+  var options = {
+    damping: '0.5'
+  }
+  Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+}
+</script>
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="/main/js/material-dashboard.min.js?v=3.0.0"></script>
+
+
+
+</body>
+
+</html>

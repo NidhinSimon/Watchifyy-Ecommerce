@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo img {
+      height: 80px;
+    }
+
+    .order-confirmation {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      animation: slideIn 0.8s ease-in-out;
+      text-align: center;
+    }
+
+    .title-confirmation {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #d32029;
+    }
+
+    .order-animation {
+      margin-bottom: 30px;
+    }
+
+    .order-details {
+      text-align: left;
+    }
+
+    .order-details h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #d32029;
+    }
+
+    .order-info ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .order-info li {
+      margin-bottom: 10px;
+    }
+
+    .buttons {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .buttons a {
+      display: inline-block;
+      margin-right: 10px;
+      text-decoration: none;
+      color: #fff;
+      background-color: #d32029;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .buttons a:hover {
+      background-color: #b31620;
+    }
+
+    @keyframes slideIn {
+      0% {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="/uploads/logo finalll.png" alt="Logo">
+    </div>
+
+    <div class="order-confirmation">
+      <div class="order-animation">
+        <img src="/uploads/order.gif" alt="Order Placement" style="
+        height: 210px;
+        width: 380px;
+    ">
+      </div>
+
+      <h2 class="title-confirmation">Thank you! Your order has been received.</h2>
+
+      <div class="order-details">
+        <div class="order-info">
+          <h2>Order Details</h2>
+          <% order.forEach(function(orderItem) { %>
+            <ul>
+              <% var totalPrice = 0 %>
+              <% orderItem.product.forEach(function(productItem) { %>
+                <li><strong>Product:</strong> <%= productItem.name %> (Quantity: <%= productItem.quantity %>) - <%= productItem.price * productItem.quantity %> </li>
+                <% totalPrice += productItem.price * productItem.quantity %>
+              <% }) %>
+              <li><strong>Subtotal:</strong> <%= totalPrice %></li>
+              <li><strong>Discount total:</strong> <%= orderItem.total ? orderItem.total : orderItem.subtotal %></li>
+              <li><strong>Shipping:</strong> Free</li>
+              <li><strong>Total:</strong> <%= orderItem.total ? orderItem.total : orderItem.subtotal %></li>
+            </ul>
+          <% }) %>
+        </div>
+
+        <div class="buttons">
+          <a href="/order" class="btn btn-primary">My Orders</a>
+          <a href="/" class="btn btn-primary">Continue Shopping</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</html>
